@@ -64,3 +64,4 @@ func start_dash(direction):
 
 func reset_dash():
 	can_dash = true
+	dash_cooldown_timer = 0.0
