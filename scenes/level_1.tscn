@@ -32,8 +32,32 @@ position = Vector2(640, 691)
 position = Vector2(2.08165e-12, 22)
 shape = SubResource("RectangleShape2D_50xls")
 
+[node name="Polygon2D" type="Polygon2D" parent="Floor"]
+color = Color(0, 0.52549, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
+
 [node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
 position = Vector2(624, 539)
 
 [node name="Enemy2" parent="." instance=ExtResource("2_3tqpx")]
 position = Vector2(779, 424)
+
+[node name="Enemy3" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(913, 416)
+
+[node name="Enemy4" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(1020, 319)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PowerBar" type="ProgressBar" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.017
+anchor_right = 0.244
+anchor_bottom = 0.086
+offset_left = 0.479997
+offset_top = -0.240001
+offset_right = -0.320023
+offset_bottom = 0.0799979
+value = 100.0

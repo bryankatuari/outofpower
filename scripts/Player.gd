@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var power_bar = get_node("../UI/PowerBar")
+
 @export var speed = 200
 @export var jump_force = -400
 @export var gravity = 900
@@ -8,6 +10,10 @@ extends CharacterBody2D
 @export var dash_duration = 0.2
 @export var dash_cooldown = 0.5
 
+@export var max_power = 100.0
+@export var power_drain_per_second = 15.0
+@export var power_restore_on_kill = 25.0
+
 var is_dashing = false
 var can_dash = true
 
@@ -15,7 +21,16 @@ var dash_timer = 0.0
 var dash_cooldown_timer = 0.0
 var dash_direction = Vector2.ZERO
 
+var power = 100.0
+
+func _ready():
+	power = max_power
+
 func _physics_process(delta):
+	update_ui()
+	
+	drain_power(delta)
+	
 	if is_on_floor():
 		reset_dash()
 
@@ -65,3 +80,23 @@ func start_dash(direction):
 func reset_dash():
 	can_dash = true
 	dash_cooldown_timer = 0.0
+	#add energy bar
+
+func drain_power(delta):
+	power -= power_drain_per_second * delta
+	power = clamp(power, 0.0, max_power)
+
+	if power <= 0:
+		die()
+		
+func die():
+	get_tree().reload_current_scene()
+	
+func restore_power(amount):
+	power += amount
+	power = clamp(power, 0.0, max_power)
+
+func update_ui():
+	if power_bar:
+		power_bar.max_value = max_power
+		power_bar.value = power
