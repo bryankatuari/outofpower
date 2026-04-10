@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://rurffu3ao3xb"]
+[gd_scene load_steps=6 format=3 uid="uid://rurffu3ao3xb"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_q621y"]
 [ext_resource type="PackedScene" uid="uid://t4qjk31ad6v6" path="res://scenes/enemy.tscn" id="2_3tqpx"]
+[ext_resource type="PackedScene" uid="uid://ddb5n2lqv8bte" path="res://scenes/goal.tscn" id="3_7jy2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mvgtx"]
 size = Vector2(24.625, 49.875)
@@ -33,20 +34,20 @@ position = Vector2(2.08165e-12, 22)
 shape = SubResource("RectangleShape2D_50xls")
 
 [node name="Polygon2D" type="Polygon2D" parent="Floor"]
-color = Color(0, 0.52549, 0, 1)
+color = Color(0, 0.0901961, 0, 1)
 polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
 
 [node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(624, 539)
+position = Vector2(905, 283)
 
 [node name="Enemy2" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(779, 424)
+position = Vector2(654, 315)
 
 [node name="Enemy3" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(913, 416)
+position = Vector2(1058, 283)
 
 [node name="Enemy4" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(1020, 319)
+position = Vector2(655, 461)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -61,3 +62,6 @@ offset_top = -0.240001
 offset_right = -0.320023
 offset_bottom = 0.0799979
 value = 100.0
+
+[node name="Goal" parent="." instance=ExtResource("3_7jy2u")]
+position = Vector2(1138, 211)
