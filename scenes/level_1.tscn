@@ -37,18 +37,6 @@ shape = SubResource("RectangleShape2D_50xls")
 color = Color(0, 0.0901961, 0, 1)
 polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
 
-[node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(905, 283)
-
-[node name="Enemy2" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(654, 315)
-
-[node name="Enemy3" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(1058, 283)
-
-[node name="Enemy4" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(655, 461)
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PowerBar" type="ProgressBar" parent="UI"]
@@ -64,4 +52,23 @@ offset_bottom = 0.0799979
 value = 100.0
 
 [node name="Goal" parent="." instance=ExtResource("3_7jy2u")]
-position = Vector2(1138, 211)
+position = Vector2(427, 450)
+
+[node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(743, 474)
+patrol_distance = 50.0
+
+[node name="Enemy2" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(719, 146)
+enemy_type = 1
+patrol_distance = 50.0
+
+[node name="Enemy3" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(569, 495)
+enemy_type = 3
+patrol_distance = 50.0
+
+[node name="Enemy4" parent="." instance=ExtResource("2_3tqpx")]
+position = Vector2(898, 513)
+enemy_type = 2
+patrol_distance = 50.0

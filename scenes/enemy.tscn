@@ -1,20 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://t4qjk31ad6v6"]
+[gd_scene load_steps=5 format=3 uid="uid://t4qjk31ad6v6"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_e7pmg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qpd4"]
-size = Vector2(25, 50)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldp5r"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4c1mf"]
+size = Vector2(894, 177)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yllbw"]
+size = Vector2(50, 50)
 
 [node name="Enemy" type="Area2D"]
-position = Vector2(313, 591)
 script = ExtResource("1_e7pmg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 32)
-shape = SubResource("RectangleShape2D_4qpd4")
+position = Vector2(0, 108)
+shape = SubResource("RectangleShape2D_ldp5r")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, 80)
 color = Color(1, 0, 0, 1)
-polygon = PackedVector2Array(-12, 7, 13, 7, 13, 57, -12, 57)
+polygon = PackedVector2Array(-25, 3, 25, 3, 25, 53, -25, 53)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+position = Vector2(0, 108)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_4c1mf")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 108)
+shape = SubResource("RectangleShape2D_yllbw")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
