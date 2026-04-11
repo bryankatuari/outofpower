@@ -14,7 +14,7 @@ extends CharacterBody2D
 
 @export var max_power = 100.0
 @export var power_drain_per_second = 17.5
-@export var power_restore_on_kill = 25.0
+@export var power_restore_on_kill = 10.0
 
 var is_dashing = false
 var can_dash = true
@@ -36,7 +36,8 @@ func _physics_process(delta):
 		return
 	update_ui()
 	drain_power(delta)
-
+	if is_dead:
+		return
 	if is_on_floor():
 		reset_dash()
 
@@ -98,23 +99,31 @@ func reset_dash():
 	dash_cooldown_timer = 0.0
 
 func drain_power(delta):
+	if is_dead:
+		return
+
 	power -= power_drain_per_second * delta
 	power = clamp(power, 0.0, max_power)
 
 	if power <= 0:
+		power = 0.0
 		die()
 
 func die():
 	if is_dead:
 		return
-		
+
 	is_dead = true
 	velocity = Vector2.ZERO
 	is_dashing = false
-	
+	can_dash = false
+	dash_cooldown_timer = 0.0
+	dash_timer = 0.0
+
 	anim.rotation_degrees = 0
+	anim.flip_h = not facing_right
 	anim.play("death")
-	
+
 	await get_tree().create_timer(1.0).timeout
 	get_tree().reload_current_scene()
 

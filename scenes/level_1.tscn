@@ -434,7 +434,6 @@ text = "0"
 
 [node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
 position = Vector2(678, 811)
-patrol_distance = 50.0
 
 [node name="BatterySpawnPoints" type="Node2D" parent="."]
 position = Vector2(185, 163)

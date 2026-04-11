@@ -9,7 +9,7 @@ enum EnemyType {
 
 @export var enemy_type: EnemyType = EnemyType.PATROL_HORIZONTAL
 @export var move_speed = 80.0
-@export var patrol_distance = 100.0
+@export var patrol_distance = 50.0
 @export var charge_speed = 180.0
 @export var flee_speed = 140.0
 
@@ -68,6 +68,7 @@ func _on_body_entered(body):
 	if body.is_in_group("player"):
 		if body.is_dashing:
 			body.reset_dash()
+			body.restore_power(body.power_restore_on_kill)
 			queue_free()
 		else:
 			body.die()
