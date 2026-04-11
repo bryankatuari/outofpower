@@ -1,11 +1,12 @@
-[gd_scene load_steps=53 format=3 uid="uid://rurffu3ao3xb"]
+[gd_scene load_steps=55 format=3 uid="uid://c1waeqvbcnmgu"]
 
+[ext_resource type="Script" path="res://scripts/level_1.gd" id="1_i11gi"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_q621y"]
 [ext_resource type="Texture2D" uid="uid://uplbud6u87m4" path="res://art/player/Sprites/DASH ATTACK.png" id="2_1tymf"]
 [ext_resource type="PackedScene" uid="uid://t4qjk31ad6v6" path="res://scenes/enemy.tscn" id="2_3tqpx"]
+[ext_resource type="PackedScene" uid="uid://co06vbc04hnd1" path="res://scenes/battery.tscn" id="2_4onwq"]
 [ext_resource type="Texture2D" uid="uid://mvvls17q1cp6" path="res://art/player/Sprites/IDLE.png" id="2_pklir"]
 [ext_resource type="Texture2D" uid="uid://whj5ylquqx8u" path="res://art/player/Sprites/DEATH.png" id="3_0h7vr"]
-[ext_resource type="PackedScene" uid="uid://ddb5n2lqv8bte" path="res://scenes/goal.tscn" id="3_7jy2u"]
 [ext_resource type="Texture2D" uid="uid://pwhx4vkp4fr2" path="res://art/player/Sprites/JUMP.png" id="4_nfeeh"]
 [ext_resource type="Texture2D" uid="uid://deqv3kldiefrt" path="res://art/player/Sprites/RUN.png" id="5_5aiew"]
 
@@ -330,7 +331,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50xls"]
 size = Vector2(1280, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hj2fy"]
+size = Vector2(216, 14)
+
 [node name="Level" type="Node2D"]
+script = ExtResource("1_i11gi")
+battery_scene = ExtResource("2_4onwq")
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(4, 652)
@@ -352,16 +358,51 @@ position = Vector2(13, 0)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_o3nrt")
 animation = &"dash_attack"
-frame_progress = 0.256852
+frame_progress = 0.699811
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(640, 691)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(2.08165e-12, 22)
+position = Vector2(0, 22)
 shape = SubResource("RectangleShape2D_50xls")
 
 [node name="Polygon2D" type="Polygon2D" parent="Floor"]
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
+
+[node name="Floor" type="StaticBody2D" parent="Floor"]
+position = Vector2(673, -620)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Floor"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_50xls")
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/Floor"]
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
+
+[node name="Floor2" type="StaticBody2D" parent="Floor"]
+position = Vector2(640, 691)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Floor2"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_50xls")
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/Floor2"]
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
+
+[node name="Floor" type="StaticBody2D" parent="Floor/Floor2"]
+position = Vector2(-1266, -1254)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Floor2/Floor"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_50xls")
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/Floor2/Floor"]
 color = Color(0, 0.0901961, 0, 1)
 polygon = PackedVector2Array(-640, 15, -640, 29, 640, 29, 640, 15)
 
@@ -379,24 +420,170 @@ offset_right = -0.320023
 offset_bottom = 0.0799979
 value = 100.0
 
-[node name="Goal" parent="." instance=ExtResource("3_7jy2u")]
-position = Vector2(427, 450)
+[node name="ScoreLabel" type="Label" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.028
+anchor_right = 0.554
+anchor_bottom = 0.081
+offset_top = -0.160001
+offset_right = -0.120026
+offset_bottom = -0.32
+text = "0"
 
 [node name="Enemy" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(743, 474)
+position = Vector2(678, 811)
 patrol_distance = 50.0
 
-[node name="Enemy2" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(719, 146)
-enemy_type = 1
-patrol_distance = 50.0
+[node name="BatterySpawnPoints" type="Node2D" parent="."]
+position = Vector2(185, 163)
 
-[node name="Enemy3" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(569, 495)
-enemy_type = 3
-patrol_distance = 50.0
+[node name="Marker2D" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(670, 228)
 
-[node name="Enemy4" parent="." instance=ExtResource("2_3tqpx")]
-position = Vector2(898, 513)
-enemy_type = 2
-patrol_distance = 50.0
+[node name="Marker2D2" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(886, 424)
+
+[node name="Marker2D3" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(941, 11)
+
+[node name="Marker2D4" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(624, -132)
+
+[node name="Marker2D5" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(18, 425)
+
+[node name="Marker2D6" type="Marker2D" parent="BatterySpawnPoints"]
+position = Vector2(-61, 214)
+
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2(639, 610)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(1070, 610)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform2"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform3" type="StaticBody2D" parent="."]
+position = Vector2(202, 610)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform3"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform4" type="StaticBody2D" parent="."]
+position = Vector2(423, 525)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform4"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform5" type="StaticBody2D" parent="."]
+position = Vector2(854, 411)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform5"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform5"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform6" type="StaticBody2D" parent="."]
+position = Vector2(424, 279)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform6"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform6"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform7" type="StaticBody2D" parent="."]
+position = Vector2(125, 399)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform7"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform7"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform8" type="StaticBody2D" parent="."]
+position = Vector2(422, 135)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform8"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform8"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform9" type="StaticBody2D" parent="."]
+position = Vector2(1125, 196)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform9"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform9"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="Platform10" type="StaticBody2D" parent="."]
+position = Vector2(808, 51)
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform10"]
+position = Vector2(2.71201e-05, 0)
+scale = Vector2(0.16875, 1)
+color = Color(0, 0.0901961, 0, 1)
+polygon = PackedVector2Array(-640, 15, -640, 22.0554, -640, 29, 640, 29, 640, 21.6342, 640, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform10"]
+position = Vector2(0, 22)
+shape = SubResource("RectangleShape2D_hj2fy")
+
+[node name="BatteryContainer" type="Node2D" parent="."]

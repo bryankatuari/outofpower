@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var power_bar = get_node("../UI/PowerBar")
+@onready var score_label = get_node("../UI/ScoreLabel")
 @onready var anim = $AnimatedSprite2D
 
 @export var speed = 200
@@ -12,13 +13,14 @@ extends CharacterBody2D
 @export var dash_cooldown = 0.5
 
 @export var max_power = 100.0
-@export var power_drain_per_second = 15.0
+@export var power_drain_per_second = 17.5
 @export var power_restore_on_kill = 25.0
 
 var is_dashing = false
 var can_dash = true
 var is_dead = false
 
+var score = 0
 var dash_timer = 0.0
 var dash_cooldown_timer = 0.0
 var dash_direction = Vector2.ZERO
@@ -125,6 +127,9 @@ func update_ui():
 		power_bar.max_value = max_power
 		power_bar.value = power
 
+	if score_label:
+		score_label.text = "Score: " + str(score)
+
 func update_facing():
 	if is_dashing and (dash_direction == Vector2.UP or dash_direction == Vector2.DOWN):
 		return
@@ -159,3 +164,9 @@ func set_dash_sprite_rotation(direction):
 func reset_sprite_rotation():
 	anim.rotation_degrees = 0
 	anim.flip_h = not facing_right
+
+func add_score(amount):
+	score += amount
+
+func refill_power_full():
+	power = max_power
