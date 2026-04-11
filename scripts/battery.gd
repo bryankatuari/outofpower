@@ -9,5 +9,8 @@ func _on_body_entered(body):
 
 		queue_free()
 
-		if level and level.has_method("spawn_battery"):
-			level.call_deferred("spawn_battery")
+		if level:
+			if level.has_method("spawn_battery"):
+				level.call_deferred("spawn_battery")
+			if level.has_method("spawn_enemies_for_score"):
+				level.call_deferred("spawn_enemies_for_score")
